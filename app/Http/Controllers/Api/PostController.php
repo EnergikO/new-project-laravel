@@ -11,7 +11,7 @@ class PostController extends Controller
 {
 
     public function getPosts()
-    {        
+    {
         $returnedFields = [
             'id',
             'theme',
@@ -22,9 +22,8 @@ class PostController extends Controller
     }
 
     public function getPostById($id)
-    {        
+    {
         $returnedFields = [
-            'id',
             'theme',
             'message',
             'author_id',
@@ -32,4 +31,11 @@ class PostController extends Controller
         return PostHelper::getPostById($id, $returnedFields);
     }
 
+    public function getPostsByAuthorId($author_id) {
+        $returnedFields = [
+            'theme',
+            'message',
+        ];
+        return PostHelper::getPostsByAuthorId($author_id, $returnedFields);
+    }
 }

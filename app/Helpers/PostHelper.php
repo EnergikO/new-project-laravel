@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Auth;
 use Response;
 
 class PostHelper {
-    public static function getPosts($returnedFields = [])
+    public static function getPosts($returnedFields=[])
     {
         $posts = Post::get($returnedFields);
 
-        if (!empty($posts)) {    
+        if (!empty($posts)) {
             return Response::json([
                 'status' => 'ok',
                 'posts' => $posts,
@@ -25,10 +25,10 @@ class PostHelper {
         }
     }
 
-    public static function getPostById($id, $returnedFields = []) {
+    public static function getPostById($id, $returnedFields=[]) {
         $post = Post::find($id, $returnedFields);
 
-        if (!empty($post)) {    
+        if (!empty($post)) {
             return Response::json([
                 'status' => 'ok',
                 'post' => $post,
@@ -40,6 +40,22 @@ class PostHelper {
                 'message' => 'Post not found',
             ], 404);
         }
+    }
 
+    public static function getPostsByAuthorId($author_id, $returnedFields=[]) {
+        $posts = Post::where('author_id', $author_id)->get($returnedFields);
+
+        if (!$posts->isEmpty()) {    
+            return Response::json([
+                'status' => 'ok',
+                'posts' => $posts,
+            ], 200);
+    
+        } else {
+            return Response::json([
+                'status' => 'error',
+                'message' => 'For this user not found any posts',
+            ], 404);
+        }
     }
 }

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/users', [Api\UserController::class, 'getUsers'])->name('users.index');
 Route::get('/users/{id}', [Api\UserController::class, 'getUserById'])->name('users.show');
+Route::get('/users/{id}/posts', [Api\PostController::class, 'getPostsByAuthorId'])->name('users.posts');
 
 Route::get('/posts', [Api\PostController::class, 'getPosts'])->name('users.index');
 Route::get('/posts/{id}', [Api\PostController::class, 'getPostById'])->name('users.show');

@@ -16,6 +16,7 @@ class UserController extends Controller
             'id',
             'user_name',
             'login',
+            'password',
         ];
         return UserHelper::getUsers($returnedFields);
     }
