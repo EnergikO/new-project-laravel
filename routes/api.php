@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,11 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/users', [Api\UserController::class, 'getUsers'])->name('users.index');
+Route::get('/users/{id}', [Api\UserController::class, 'getUserById'])->name('users.show');
 
-Route::apiResources([
-    'users' => ApiUserController::class,
-    'posts' => ApiPostController::class,
-]);
+Route::get('/posts', [Api\PostController::class, 'getPosts'])->name('users.index');
+Route::get('/posts/{id}', [Api\PostController::class, 'getPostById'])->name('users.show');
