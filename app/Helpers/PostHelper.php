@@ -60,7 +60,9 @@ class PostHelper {
     }
     
     public static function add($inputData) {
-        // $user = auth()->user();
+        $user = auth()->user();
+
+        $inputData['author_id'] = $user->id;
 
         $post = Post::create($inputData);
 

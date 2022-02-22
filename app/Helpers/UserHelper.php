@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Response;
 
+
 class UserHelper {
     public static function getUsers($returnedFields = [])
     {

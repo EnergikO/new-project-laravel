@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Helpers\PostHelper;
+use Validator;
 
 class PostController extends Controller
 {
@@ -43,7 +44,6 @@ class PostController extends Controller
         $validator = Validator::make($request->all(), [
             'theme' => 'required|string|min:4|max:128',
             'message' => 'required|string|min:4|max:4000',
-            'author_id' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
