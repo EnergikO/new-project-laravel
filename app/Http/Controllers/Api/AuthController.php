@@ -12,12 +12,12 @@ use Validator;
 
 class AuthController extends Controller
 {
-    public function signup(Request $request)
+    public static function signup(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name_user' => 'required|string|max:255',
-            'login' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
+            'user_name' => 'required|string|min:4|max:64',
+            'login' => 'required|string|min:4|max:64|unique:users',
+            'password' => 'required|string|min:4|max:100',
         ]);
 
         if ($validator->fails()) {
@@ -28,25 +28,33 @@ class AuthController extends Controller
         }
 
         $user = User::create([
-            'name_user' => $request->name_user,
-            'email' => $request->email,
+            'user_name' => $request->user_name,
+            'login' => $request->login,
             'password' => Hash::make($request->password),
         ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        $company = new Company();
-        $company->save();
-        $company->user()->save($user);
+        $_token = $user->createToken('_token')->plainTextToken;
+        $user->_token = $_token;
+        $user->save();
 
         return response()->json([
             'status' => 'success',
             'data' => [
                 'user' => $user,
-                'access_token' => $token,
+                'access_token' => $_token,
                 'token_type' => 'Bearer',
             ],
         ], 201);
+    }
+
+    public static function login(Request $request)
+    {
+
+    }
+
+    public static function logout(Request $request)
+    {
+
     }
 
 }
