@@ -38,4 +38,23 @@ class PostController extends Controller
         ];
         return PostHelper::getPostsByAuthorId($author_id, $returnedFields);
     }
+
+    public function add(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'theme' => 'required|string|min:4|max:128',
+            'message' => 'required|string|min:4|max:4000',
+            'author_id' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'fail',
+                'data' => $validator->errors(),
+            ], 400);
+        }
+
+        $inputData = $validator->validated();
+
+        return PostHelper::add($inputData);
+    }
 }

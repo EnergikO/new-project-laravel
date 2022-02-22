@@ -49,12 +49,46 @@ class AuthController extends Controller
 
     public static function login(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'login' => 'required|string|min:4|max:64',
+            'password' => 'required|string|min:4|max:100',
+        ]);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'fail',
+                'data' => $validator->errors(),
+            ], 400);
+        }
+
+        if (!Auth::attempt($request->only('login', 'password'))) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Wrong login or password',
+            ], 401);
+        }
+
+        $user = User::where('login', $request['login'])->firstOrFail();
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+            ],
+        ], 200);
     }
 
     public static function logout(Request $request)
     {
+        $request->user()->currentAccessToken()->delete();
 
+        return response()->json([
+            'status' => 'success',
+            'data' => null,
+        ], 200);
     }
 
 }

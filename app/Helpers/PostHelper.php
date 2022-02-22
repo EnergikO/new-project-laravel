@@ -58,4 +58,25 @@ class PostHelper {
             ], 404);
         }
     }
+    
+    public static function add($inputData) {
+        // $user = auth()->user();
+
+        $post = Post::create($inputData);
+
+        if ($post->save()) {
+            return Response::json([
+                'status' => 'success',
+                'data' => [
+                    'post' => $post,
+                ],
+            ], 201);
+        } else {
+            return Response::json([
+                'status' => 'error',
+                'message' => 'Something went wrong',
+            ], 500);
+        }
+
+    }
 }
