@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Response;
 
 class PostHelper {
-    public static function getPosts($returnedFields=[])
-    {
+    public static function getPosts($returnedFields=[]) {
         $posts = Post::get($returnedFields);
 
         if (!empty($posts)) {
@@ -79,6 +78,69 @@ class PostHelper {
                 'message' => 'Something went wrong',
             ], 500);
         }
+    }
+    
+    public static function update($id, $inputData) {
+        $post = Post::find($id);
 
+        if (empty($post)) {
+            return Response::json([
+                'status' => 'error',
+                'message' => 'Post not found',
+            ], 404);
+        }
+
+        if ($post->update($inputData)) {
+            return Response::json([
+                'status' => 'success',
+                'data' => [
+                    'category' => $post,
+                ],
+            ], 200);
+
+        } else {
+            return Response::json([
+                'status' => 'error',
+                'message' => 'Something went wrong',
+            ], 500);
+        }
+
+        // try {
+        //     $post->theme = $inputData['theme'];
+        //     $post->message = $inputData['message'];
+
+        //     $post->save();
+
+        //     return Response::json([
+        //         'status' => 'success',
+        //         'data' => [
+        //             'post' => $post,
+        //         ],
+        //     ], 200);
+
+        // } catch (\Throwable $th) {
+        //     return Response::json([
+        //         'status' => 'error',
+        //         'message' => $th,
+        //     ], 500);
+        // }
+    }
+    
+    public static function detele($id) {
+        $post = Post::find($id);
+        
+        if (empty($post)) {
+            return Response::json([
+                'status' => 'error',
+                'message' => 'Post not found',
+            ], 404);
+        }
+
+        Post::destroy($id);
+
+        return Response::json([
+            'status' => 'success',
+            'data' => null
+        ], 200);
     }
 }
