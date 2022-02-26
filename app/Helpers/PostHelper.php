@@ -94,7 +94,7 @@ class PostHelper {
             return Response::json([
                 'status' => 'success',
                 'data' => [
-                    'category' => $post,
+                    'post' => $post,
                 ],
             ], 200);
 
@@ -104,26 +104,6 @@ class PostHelper {
                 'message' => 'Something went wrong',
             ], 500);
         }
-
-        // try {
-        //     $post->theme = $inputData['theme'];
-        //     $post->message = $inputData['message'];
-
-        //     $post->save();
-
-        //     return Response::json([
-        //         'status' => 'success',
-        //         'data' => [
-        //             'post' => $post,
-        //         ],
-        //     ], 200);
-
-        // } catch (\Throwable $th) {
-        //     return Response::json([
-        //         'status' => 'error',
-        //         'message' => $th,
-        //     ], 500);
-        // }
     }
     
     public static function detele($id) {

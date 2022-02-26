@@ -30,11 +30,12 @@ Route::get('/users/{id}/posts', [Api\PostController::class, 'getPostsByAuthorId'
 Route::get('/posts', [Api\PostController::class, 'getPosts'])->name('users.index');
 Route::get('/posts/{id}', [Api\PostController::class, 'getPostById'])->name('users.show');
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     Route::patch('/posts/{id}', [API\PostController::class, 'update'])->name('posts.update');
     Route::delete('/posts/{id}', [API\PostController::class, 'delete'])->name('posts.delete');
 });
 
-Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
-    Route::delete('/users/{id}', [API\UserController::class, 'delete'])->name('posts.delete');
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::patch('/users/{id}', [Api\UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{id}', [Api\UserController::class, 'delete'])->name('users.delete');
 });

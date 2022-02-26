@@ -32,4 +32,28 @@ class UserController extends Controller
         return UserHelper::getUserById($id, $returnedFields);
     }
 
+    public function update(Request $request) {
+        $request->merge(['id' => $request->id]);
+
+        $validator = Validator::make($request->all(), [
+            'user_name' => 'required|string|min:4|max:64',
+            'login' => 'required|string|min:4|max:64|unique:users',
+            'password' => 'required|string|min:4|max:100',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'fail',
+                'data' => $validator->errors(),
+            ], 400);
+        }
+
+        $inputData = $validator->validated();
+
+        return UserHelper::update($request->id, $inputData);
+    }
+    
+    public function delete($id) {
+        return UserHelper::detele($id);
+    }
 }
