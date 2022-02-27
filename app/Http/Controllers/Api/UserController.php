@@ -10,9 +10,7 @@ use Validator;
 
 class UserController extends Controller
 {
-
-    public function getUsers()
-    {        
+    public function getUsers() {
         $returnedFields = [
             'id',
             'user_name',
@@ -22,14 +20,22 @@ class UserController extends Controller
         return UserHelper::getUsers($returnedFields);
     }
 
-    public function getUserById($id)
-    {        
+    public function getUserById($id) {
         $returnedFields = [
             'id',
             'user_name',
             'login',
         ];
         return UserHelper::getUserById($id, $returnedFields);
+    }
+
+    public function getUsersWithPosts() {
+        $returnedFields = [
+            'id',
+            'user_name',
+            'login',
+        ];
+        return UserHelper::getUsersWithPosts($returnedFields);
     }
 
     public function update(Request $request) {

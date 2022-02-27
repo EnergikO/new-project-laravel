@@ -24,6 +24,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 Route::get('/users', [Api\UserController::class, 'getUsers'])->name('users.index');
+Route::get('/users/posts', [Api\UserController::class, 'getUsersWithPosts'])->name('users.withPosts');
 Route::get('/users/{id}', [Api\UserController::class, 'getUserById'])->name('users.show');
 Route::get('/users/{id}/posts', [Api\PostController::class, 'getPostsByAuthorId'])->name('users.posts');
 

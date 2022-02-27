@@ -11,12 +11,7 @@ class UserHelper {
     public static function getUsers($returnedFields = []) {
         $users = User::get($returnedFields);
 
-        if (!empty($users)) {
-
-            foreach($users as $user) {
-                $user->posts;
-            }
-    
+        if (!empty($users)) {    
             return Response::json([
                 'status' => 'ok',
                 'users' => $users,
@@ -45,6 +40,30 @@ class UserHelper {
             return Response::json([
                 'status' => 'error',
                 'message' => 'User not found',
+            ], 404);
+        }
+
+    }
+
+    public static function getUsersWithPosts($returnedFields = []) {
+        $users = User::get($returnedFields);
+
+        foreach ($users as $user) {
+            $user->posts;
+        }
+
+        if (!empty($user)) {    
+
+            return Response::json([
+                'status' => 'ok',
+                'users' => $users,
+            ], 200);
+
+        } else {
+
+            return Response::json([
+                'status' => 'error',
+                'message' => 'Users not found',
             ], 404);
         }
 
